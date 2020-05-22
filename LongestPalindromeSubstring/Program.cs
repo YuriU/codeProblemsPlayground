@@ -7,7 +7,7 @@ namespace LongestPalindromeSubstring
     {
         static void Main(string[] args)
         {
-            Func<string, string> implemetation = MyFirstNaiveImplementation.LongestPalindrome;
+            Func<string, string> implemetation = MyNaiveWithSubstitutionChars.LongestPalindrome;
 
             TestImplementation(implemetation);
         }
