@@ -7,7 +7,10 @@ namespace LongestPalindromeSubstring
     {
         static void Main(string[] args)
         {
-            Func<string, string> implemetation = MyNaiveWithSubstitutionChars.LongestPalindrome;
+            var maxVal = int.MaxValue;
+            var minVal = int.MinValue;
+            
+            Func<string, string> implemetation = Manachers_Algorithm.LongestPalindrome;
 
             TestImplementation(implemetation);
         }
