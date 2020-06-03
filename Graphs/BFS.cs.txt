@@ -1,0 +1,123 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+class Test {
+
+    public const int EdgeValue = 6;
+    
+    public readonly int Vertices;
+
+    public readonly int StartVertex;
+
+    public readonly Dictionary<int, List<int>> Edges;
+
+    public Test(int vertices, int startVertex, Dictionary<int, List<int>> edges){
+        Vertices = vertices;
+        StartVertex = startVertex;
+        Edges = edges;
+    }
+
+    public string Run()
+    {
+        Dictionary<int, int> vertexToDistance = BFS_CalculateDistances();     
+        return FormatDistances(vertexToDistance, Vertices, StartVertex);
+    }
+
+    private Dictionary<int, int> BFS_CalculateDistances()
+    {
+        Dictionary<int, int> vertexToDistance = new Dictionary<int, int>();
+        HashSet<int> visitedVertices = new HashSet<int>();
+        Queue<int> verticesToProcess = new Queue<int>();
+
+        verticesToProcess.Enqueue(StartVertex);
+        vertexToDistance[StartVertex] = 0;
+
+        while(verticesToProcess.Count > 0) {
+            var vertex = verticesToProcess.Dequeue();
+            var distance = vertexToDistance[vertex];
+
+            if(Edges.ContainsKey(vertex)){
+                foreach(var toVertex in Edges[vertex]){
+                    if(!visitedVertices.Contains(toVertex)){
+                        vertexToDistance[toVertex] = distance + EdgeValue;
+                        visitedVertices.Add(toVertex);
+                        verticesToProcess.Enqueue(toVertex);
+                    }
+                }
+            }
+        }
+
+        return vertexToDistance;
+    }
+
+    private static string FormatDistances(Dictionary<int, int> vertexToDistance, int vertices, int startVertex)
+    {
+        var sb = new System.Text.StringBuilder();
+        for(int v = 1; v <= vertices; v++){
+            if(v == startVertex){
+                continue;
+            }
+
+            if(vertexToDistance.ContainsKey(v)){
+                sb.Append(vertexToDistance[v]);
+            }
+            else {
+                sb.Append(-1);
+            }
+
+            if(v != vertices) {
+                sb.Append(' ');
+            }
+        }
+
+        return sb.ToString();
+    }
+}
+
+class Solution {
+    static void Main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
+
+        var tests = ReadTests();
+
+        foreach(var test in tests){
+            Console.WriteLine(test.Run());
+        }
+    }
+
+    static Test[] ReadTests(){
+        var numberOfTests = int.Parse(Console.ReadLine());
+
+        var tests = new Test[numberOfTests];
+        for(int i = 0; i < numberOfTests; i++){
+            var verticesEdgesCounts = Console.ReadLine().Split(' ');
+            var vertices = int.Parse(verticesEdgesCounts[0]);
+            var edgesCount = int.Parse(verticesEdgesCounts[1]);
+
+            Dictionary<int, List<int>> vertexToEdges = new Dictionary<int, List<int>>();
+            for(int e = 0; e < edgesCount; e++){
+                var fromTo = Console.ReadLine().Split(' ');
+                var from = int.Parse(fromTo[0]);
+                var to = int.Parse(fromTo[1]);
+                
+                if(!vertexToEdges.ContainsKey(from)){
+                    vertexToEdges.Add(from, new List<int>());
+                }
+
+                if(!vertexToEdges.ContainsKey(to)){
+                    vertexToEdges.Add(to, new List<int>());
+                }
+
+                vertexToEdges[from].Add(to);
+                vertexToEdges[to].Add(from);
+            }
+
+            var startVertex = int.Parse(Console.ReadLine());
+
+            tests[i] = new Test(vertices, startVertex, vertexToEdges);
+        }
+
+        return tests;
+    }
+}
