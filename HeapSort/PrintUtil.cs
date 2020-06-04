@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System;
 
 public static class PrintUtil {
-    public static void PrintHeap(int[] heap) {
-            var height = (int)Math.Log2(heap.Length);
+    public static void PrintHeap(int[] heap, int heapLength = -1) {
+            heapLength = heapLength == -1 ? heap.Length : Math.Min(heap.Length, heapLength);
+
+            var height = (int)Math.Log2(heapLength);
             var lastLevel = (int)Math.Pow(2, height);            
             var maxWidth = lastLevel * 4;
 
@@ -15,7 +17,7 @@ public static class PrintUtil {
 
                 List<int> list = new List<int>();
                 for(int i = 0; i < length; i++){
-                    if(index < heap.Length){
+                    if(index < heapLength){
                         list.Add(heap[index++]);
                     }
                     else {

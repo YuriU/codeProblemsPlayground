@@ -11,42 +11,52 @@ namespace HeapSort
 
             PrintUtil.PrintHeap(array);
 
-            HeapSort(array);
+            BuildMaxHeap(array, array.Length);
 
             PrintUtil.PrintHeap(array);
 
-            foreach(var item in array){
-                Console.Write(item);
-                Console.Write(' ');
-            }
+            BuildMinHeap(array, array.Length);
+
+            PrintUtil.PrintHeap(array);
+
+            var minValue = ExtractMin(array, array.Length);
+
+            Console.WriteLine($"MinValue: {minValue}");
+
+            PrintUtil.PrintHeap(array, array.Length - 1);
+
+            minValue = ExtractMin(array, array.Length - 1);
+
+            Console.WriteLine($"MinValue: {minValue}");
+
+            PrintUtil.PrintHeap(array, array.Length - 2);
         }
 
-        public static void HeapSort(int[] array) {
-
-            BuildHeap(array, array.Length);
-
-            for(int i = array.Length - 1; i >= 0; i--){
-                
-                var temp = array[i];
-                array[i] = array[0];
-                array[0] = temp;
-
-                MaxHeapify(array, 0, i);
-            }
-        }
-
-        public static void BuildHeap(int[] heap, int heap_size){
-            for(int i = heap_size / 2; i >= 0; i--){
+        private static void BuildMaxHeap(int[] heap, int heap_size) {
+            for(int i = heap_size / 2 -1; i >= 0; i--){
                 MaxHeapify(heap, i, heap_size);
             }
         }
 
-        public static void MaxHeapify(int[] heap, int index, int heap_size)
-        {   
-            var left = Left(index);
-            var right = Right(index);
+        private static void BuildMinHeap(int[] heap, int heap_size) {
+            for(int i = heap_size / 2 -1; i >= 0; i--){
+                MinHeapify(heap, i, heap_size);
+            }
+        }
 
+        private static int ExtractMin(int[] heap, int heap_size) {
+            var minValue = heap[0];
+            heap[0] = heap[heap_size - 1];
+            MinHeapify(heap, 0, heap_size - 1);
+            return minValue;
+        }
+
+
+        private static void MaxHeapify(int[] heap, int index, int heap_size){
             int biggest = index;
+            int left = Left(index);
+            int right = Rigth(index);
+
             if(left < heap_size && heap[left] > heap[biggest]){
                 biggest = left;
             }
@@ -55,27 +65,50 @@ namespace HeapSort
                 biggest = right;
             }
 
-            if(biggest != index){
-                var temp = heap[biggest];
-                heap[biggest] = heap[index];
-                heap[index] = temp;
+            if(biggest != index) {
+                var temp = heap[index];
+                heap[index] = heap[biggest];
+                heap[biggest] = temp;
 
                 MaxHeapify(heap, biggest, heap_size);
             }
         }
 
-        public static int Parent(int index){
-            int oneBasedIndex = index + 1;
-            return (oneBasedIndex / 2) - 1;
-        }
-        public static int Left(int index) {
-            int oneBasedIndex = index + 1;
-            return (oneBasedIndex * 2) - 1;
+        private static void MinHeapify(int[] heap, int index, int heap_size){
+            int smallest = index;
+            int left = Left(index);
+            int right = Rigth(index);
+
+            if(left < heap_size && heap[left] < heap[smallest]){
+                smallest = left;
+            }
+
+            if(right < heap_size && heap[right] < heap[smallest]){
+                smallest = right;
+            }
+
+            if(smallest != index) {
+                var temp = heap[index];
+                heap[index] = heap[smallest];
+                heap[smallest] = temp;
+
+                MinHeapify(heap, smallest, heap_size);
+            }
         }
 
-        public static int Right(int index) {
-            int oneBasedIndex = index + 1;
-            return (oneBasedIndex * 2 + 1) - 1;
+        private static int Parent(int i) {
+            var oneBased = i + 1;
+            return (oneBased / 2) -1;
+        }
+
+        private static int Left(int i) {
+            var oneBased = i + 1;
+            return (oneBased * 2) -1;
+        }
+
+        private static int Rigth(int i) {
+            var oneBased = i + 1;
+            return (oneBased * 2 + 1) -1;
         }
     }
 }
