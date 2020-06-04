@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Linq;
 
 namespace HeapSort
 {
@@ -11,9 +11,28 @@ namespace HeapSort
 
             PrintUtil.PrintHeap(array);
 
-            BuildHeap(array, array.Length);
+            HeapSort(array);
 
             PrintUtil.PrintHeap(array);
+
+            foreach(var item in array){
+                Console.Write(item);
+                Console.Write(' ');
+            }
+        }
+
+        public static void HeapSort(int[] array) {
+
+            BuildHeap(array, array.Length);
+
+            for(int i = array.Length - 1; i >= 0; i--){
+                
+                var temp = array[i];
+                array[i] = array[0];
+                array[0] = temp;
+
+                MaxHeapify(array, 0, i);
+            }
         }
 
         public static void BuildHeap(int[] heap, int heap_size){
