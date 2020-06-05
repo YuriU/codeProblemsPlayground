@@ -27,6 +27,17 @@ public abstract class Heap {
         return topValue;
     }
 
+    public void Insert(int newItem){
+        _heap_size++;
+        if(_heap_size > _heap.Length){
+            var newHeap = new int[_heap.Length * 2];
+            Array.Copy(_heap, newHeap, _heap.Length);
+            _heap = newHeap;
+        }
+
+        _heap[_heap_size - 1] = GetLowestRankElement();
+        PromoteKey(_heap_size - 1, newItem);
+    }
 
     public void PromoteKey(int i, int value){
         if(!IsAPriorB(value, _heap[i])){
@@ -73,6 +84,8 @@ public abstract class Heap {
 
     protected abstract bool IsAPriorB(int a, int b);
 
+    protected abstract int GetLowestRankElement();
+
     public void Print(){
         PrintUtil.PrintHeap(_heap, _heap_size);
     }
@@ -103,10 +116,14 @@ public class MinHeap : Heap {
         : base(array, array.Length) { }
 
     public MinHeap() 
-        : base(new int[100], 100) {}
+        : base(new int[100], 0) {}
 
-    protected override bool IsAPriorB(int a, int b){
+    protected override bool IsAPriorB(int a, int b) {
         return a < b;
+    }
+
+    protected override int GetLowestRankElement() {
+        return int.MaxValue;
     }
 }
 
@@ -115,10 +132,14 @@ public class MaxHeap : Heap {
         : base(array, array.Length) { }
 
     public MaxHeap() 
-        : base(new int[100], 100) {}
+        : base(new int[100], 0) {}
 
 
-    protected override bool IsAPriorB(int a, int b){
+    protected override bool IsAPriorB(int a, int b) {
         return a > b;
+    }
+
+    protected override int GetLowestRankElement() {
+        return int.MinValue;
     }
 }

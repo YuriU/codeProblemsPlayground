@@ -20,15 +20,16 @@ namespace HeapSort
             maxHeap.Print();*/
 
 
-            var minHeap = new MinHeap(array);
+            var heap = new MaxHeap();
 
-            minHeap.BuildHeap();
+            foreach(var a in array) {
+                heap.Insert(a);
+                heap.Print();
+            }
 
-            minHeap.Print();
+            //minHeap.BuildHeap();
 
-            minHeap.PromoteKey(7, 1);
-
-            minHeap.Print();
+            
 
             /*while(maxHeap.Size > 0){
                 var maxValue = maxHeap.ExtractTop();
