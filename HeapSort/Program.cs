@@ -9,7 +9,21 @@ namespace HeapSort
         {
             int[] array = new int[] { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7, 4, 3, 19, 8, 33, 45 };
 
-            PrintUtil.PrintHeap(array);
+            var minHeap = new MinHeap(array);
+
+            minHeap.Print();
+
+            minHeap.BuildHeap();
+
+            minHeap.Print();
+
+            var maxHeap = new MaxHeap(array);
+
+            maxHeap.BuildHeap();
+
+            maxHeap.Print();
+
+            /*PrintUtil.PrintHeap(array);
 
             BuildMaxHeap(array, array.Length);
 
@@ -29,7 +43,7 @@ namespace HeapSort
 
             Console.WriteLine($"MinValue: {minValue}");
 
-            PrintUtil.PrintHeap(array, array.Length - 2);
+            PrintUtil.PrintHeap(array, array.Length - 2);*/
         }
 
         private static void BuildMaxHeap(int[] heap, int heap_size) {
