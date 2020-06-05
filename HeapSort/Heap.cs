@@ -18,6 +18,8 @@ public abstract class Heap {
 
     public int Size => _heap_size;
 
+    public int Top => _heap[0];
+
     public int ExtractTop()
     {
         var topValue = _heap[0];

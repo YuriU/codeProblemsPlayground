@@ -9,58 +9,71 @@ namespace HeapSort
         {
             int[] array = new int[] { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7, 4, 3, 19, 8, 33, 45 };
 
-            /*var maxHeap = new MaxHeap(array);
-
-            maxHeap.BuildHeap();
-
-            maxHeap.Print();
-
-            maxHeap.PromoteKey(4, 25);
-
-            maxHeap.Print();*/
+            int[] testArray = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
 
-            var heap = new MaxHeap();
+            var biggestPart = new MinHeap();
+            var smallesPart = new MaxHeap();
 
-            foreach(var a in array) {
-                heap.Insert(a);
-                heap.Print();
+            int oddMedian = -1;
+            for(int i = 0; i < testArray.Length; i++) {
+
+                var median = testArray[i];
+                median = SwapWithMin(median, biggestPart);
+                median = SwapWithMax(median, smallesPart);
+
+                if(i % 2 == 0) {
+                    Console.WriteLine(median);
+                    oddMedian = median;
+                }
+                else {
+                    if(median < oddMedian) {
+                        smallesPart.Insert(median);
+                        biggestPart.Insert(oddMedian);
+                    } else {
+                        smallesPart.Insert(oddMedian);
+                        biggestPart.Insert(median);
+                    }
+
+                    Console.WriteLine(((double)median + oddMedian) / 2);
+                }
+
+                /*Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("++++++++++++++++++++++++++++++++++++++++");
+                Console.WriteLine("Smallest part");
+                smallesPart.Print();
+
+                Console.WriteLine("Biggest part");
+                biggestPart.Print();
+
+                Console.WriteLine("++++++++++++++++++++++++++++++++++++++++");*/
             }
-
-            //minHeap.BuildHeap();
-
-            
-
-            /*while(maxHeap.Size > 0){
-                var maxValue = maxHeap.ExtractTop();
-
-                Console.WriteLine($"Max value {maxValue}");
-
-                maxHeap.Print();
-            }*/
-
-            /*PrintUtil.PrintHeap(array);
-
-            BuildMaxHeap(array, array.Length);
-
-            PrintUtil.PrintHeap(array);
-
-            BuildMinHeap(array, array.Length);
-
-            PrintUtil.PrintHeap(array);
-
-            var minValue = ExtractMin(array, array.Length);
-
-            Console.WriteLine($"MinValue: {minValue}");
-
-            PrintUtil.PrintHeap(array, array.Length - 1);
-
-            minValue = ExtractMin(array, array.Length - 1);
-
-            Console.WriteLine($"MinValue: {minValue}");
-
-            PrintUtil.PrintHeap(array, array.Length - 2);*/
         }
+
+        private static int SwapWithMin(int number, MinHeap heap) {
+            if(heap.Size > 0 && number > heap.Top){
+                var result = heap.ExtractTop();
+                heap.Insert(number);
+                return result;
+            }
+            else {
+                return number;
+            }
+        }
+
+        private static int SwapWithMax(int number, MaxHeap heap) {
+            if(heap.Size > 0 && number < heap.Top){
+                var result = heap.ExtractTop();
+                heap.Insert(number);
+                return result;
+            }
+            else {
+                return number;
+            }
+        }
+        
 
         private static void BuildMaxHeap(int[] heap, int heap_size) {
             for(int i = heap_size / 2 -1; i >= 0; i--){
