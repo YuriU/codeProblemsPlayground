@@ -23,6 +23,18 @@ namespace HeapSort
 
             maxHeap.Print();
 
+            maxHeap.IncreaseKey(4, 25);
+
+            maxHeap.Print();
+
+            /*while(maxHeap.Size > 0){
+                var maxValue = maxHeap.ExtractTop();
+
+                Console.WriteLine($"Max value {maxValue}");
+
+                maxHeap.Print();
+            }*/
+
             /*PrintUtil.PrintHeap(array);
 
             BuildMaxHeap(array, array.Length);

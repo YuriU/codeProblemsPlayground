@@ -1,3 +1,5 @@
+using System;
+
 public abstract class Heap {
     protected int[] _heap;
 
@@ -14,6 +16,24 @@ public abstract class Heap {
         for(int i = _heap_size / 2 - 1; i >= 0; i--){
             Heapify(i);
         }
+    }
+
+    public int Size => _heap_size;
+
+
+    public int ExtractTop()
+    {
+        var topValue = _heap[0];
+        _heap[0] = _heap[_heap_size - 1];
+        _heap_size--;
+        Heapify(0);
+        return topValue;
+    }
+
+    protected int Parent(int index) {
+        var oneBased = index + 1;
+        var parent = oneBased / 2;
+        return parent - 1;
     }
 
     protected int Left(int index){
@@ -99,4 +119,19 @@ public class MaxHeap : Heap {
         }
     }
 
+    public void IncreaseKey(int i, int value){
+        if(_heap[i] > value){
+            throw new ArgumentException("value");
+        }
+
+        _heap[i] = value;
+        
+        while(i > 0) {
+            var parent = Parent(i);
+            if(_heap[parent] < _heap[i]){
+                Swap(parent, i);
+            }
+            i = parent;
+        }
+    }
 }
