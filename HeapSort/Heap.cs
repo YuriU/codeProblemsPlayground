@@ -10,8 +10,6 @@ public abstract class Heap {
         _heap_size = heap_size;
     }
 
-    protected abstract void Heapify(int index);
-
     public void BuildHeap() {
         for(int i = _heap_size / 2 - 1; i >= 0; i--){
             Heapify(i);
@@ -20,7 +18,6 @@ public abstract class Heap {
 
     public int Size => _heap_size;
 
-
     public int ExtractTop()
     {
         var topValue = _heap[0];
@@ -28,6 +25,24 @@ public abstract class Heap {
         _heap_size--;
         Heapify(0);
         return topValue;
+    }
+
+
+    public void PromoteKey(int i, int value){
+        if(!IsAPriorB(value, _heap[i])){
+            throw new ArgumentException("value");
+        }
+
+        _heap[i] = value;
+        
+        while(i > 0) {
+            var parent = Parent(i);
+            if(IsAPriorB(_heap[i], _heap[parent])) {
+                Swap(parent, i);
+            }
+
+            i = parent;
+        }
     }
 
     protected int Parent(int index) {
@@ -56,10 +71,31 @@ public abstract class Heap {
         _heap[b] = temp;
     }
 
+    protected abstract bool IsAPriorB(int a, int b);
+
     public void Print(){
         PrintUtil.PrintHeap(_heap, _heap_size);
     }
 
+    protected void Heapify(int index) {
+
+        var left = Left(index);
+        var right = Right(index);
+
+        var prior = index;
+        if(left < _heap_size && IsAPriorB(_heap[left], _heap[prior])) {
+            prior = left;
+        }
+
+        if(right < _heap_size && IsAPriorB(_heap[right], _heap[prior])) {
+            prior = right;
+        }
+
+        if(prior != index) {
+            Swap(index, prior);
+            Heapify(prior);
+        }
+    }
 }
 
 public class MinHeap : Heap {
@@ -69,25 +105,8 @@ public class MinHeap : Heap {
     public MinHeap() 
         : base(new int[100], 100) {}
 
-
-    protected override void Heapify(int index) {
-
-        var left = Left(index);
-        var right = Right(index);
-
-        var smallest = index;
-        if(left < _heap_size && _heap[left] < _heap[smallest]) {
-            smallest = left;
-        }
-
-        if(right < _heap_size && _heap[right] < _heap[smallest]) {
-            smallest = right;
-        }
-
-        if(smallest != index) {
-            Swap(index, smallest);
-            Heapify(smallest);
-        }
+    protected override bool IsAPriorB(int a, int b){
+        return a < b;
     }
 }
 
@@ -99,39 +118,7 @@ public class MaxHeap : Heap {
         : base(new int[100], 100) {}
 
 
-    protected override void Heapify(int index) {
-
-        var left = Left(index);
-        var right = Right(index);
-
-        var biggest = index;
-        if(left < _heap_size && _heap[left] > _heap[biggest]) {
-            biggest = left;
-        }
-
-        if(right < _heap_size && _heap[right] > _heap[biggest]) {
-            biggest = right;
-        }
-
-        if(biggest != index) {
-            Swap(index, biggest);
-            Heapify(biggest);
-        }
-    }
-
-    public void IncreaseKey(int i, int value){
-        if(_heap[i] > value){
-            throw new ArgumentException("value");
-        }
-
-        _heap[i] = value;
-        
-        while(i > 0) {
-            var parent = Parent(i);
-            if(_heap[parent] < _heap[i]){
-                Swap(parent, i);
-            }
-            i = parent;
-        }
+    protected override bool IsAPriorB(int a, int b){
+        return a > b;
     }
 }

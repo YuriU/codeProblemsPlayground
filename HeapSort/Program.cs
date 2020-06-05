@@ -9,23 +9,26 @@ namespace HeapSort
         {
             int[] array = new int[] { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7, 4, 3, 19, 8, 33, 45 };
 
-            var minHeap = new MinHeap(array);
-
-            minHeap.Print();
-
-            minHeap.BuildHeap();
-
-            minHeap.Print();
-
-            var maxHeap = new MaxHeap(array);
+            /*var maxHeap = new MaxHeap(array);
 
             maxHeap.BuildHeap();
 
             maxHeap.Print();
 
-            maxHeap.IncreaseKey(4, 25);
+            maxHeap.PromoteKey(4, 25);
 
-            maxHeap.Print();
+            maxHeap.Print();*/
+
+
+            var minHeap = new MinHeap(array);
+
+            minHeap.BuildHeap();
+
+            minHeap.Print();
+
+            minHeap.PromoteKey(7, 1);
+
+            minHeap.Print();
 
             /*while(maxHeap.Size > 0){
                 var maxValue = maxHeap.ExtractTop();
