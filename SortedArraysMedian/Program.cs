@@ -43,14 +43,15 @@ namespace SortedArraysMedian
 
                 Console.WriteLine();
 
-                if(a[aIndex] < b[bIndex-1]){
+                if(aIndex > 0 && a[aIndex] < b[bIndex-1]){
                     min_index = aIndex + 1;
                 } 
-                else if(b[bIndex] < a[aIndex-1]){
+                else if(bIndex > 0 && b[bIndex] < a[aIndex-1]){
                     max_index = aIndex-1;
                 }
                 else {
-                    Console.WriteLine("Found");
+
+                    Console.WriteLine($"Found , {aIndex}, {bIndex}");
                 }
 
 
