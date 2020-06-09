@@ -33,6 +33,7 @@ namespace SortedArraysMedian
             int bIndex = 0;
 
             int iter = 2;
+            int median = -1;
             while(min_index <= max_index) {
 
                 aIndex = (max_index + min_index) / 2;
@@ -51,6 +52,16 @@ namespace SortedArraysMedian
                 }
                 else {
 
+                    if(aIndex == 0){
+                        median = b[bIndex - 1];
+                    }
+                    else if(bIndex == 0){
+                        median = a[aIndex - 1];
+                    }
+                    else{
+                        median = Math.Max(a[aIndex -1], b[bIndex-1]);
+                    }
+                    
                     Console.WriteLine($"Found , {aIndex}, {bIndex}");
                 }
 
