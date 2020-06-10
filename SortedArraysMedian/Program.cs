@@ -7,8 +7,8 @@ namespace SortedArraysMedian
     {
         static void Main(string[] args)
         {
-            var arrayA = new int[] { 1, 3, 5, 6, 8 };
-            var arrayB = new int[] { 5, 6, 7, 12, 23, 44 };
+            var arrayA = new int[] { 1, 2 };
+            var arrayB = new int[] { 3, 4 };
 
             Get2SortedArraysMedian(arrayA, arrayB);
 
@@ -32,7 +32,6 @@ namespace SortedArraysMedian
             int aIndex = 0;
             int bIndex = 0;
 
-            int iter = 2;
             int median = -1;
             while(min_index <= max_index) {
 
@@ -48,10 +47,11 @@ namespace SortedArraysMedian
                     min_index = aIndex + 1;
                 } 
                 else if(bIndex > 0 && aIndex < a.Length && b[bIndex] < a[aIndex-1]){
-                    max_index = aIndex-1;
+                    max_index = aIndex - 1;
                 }
                 else {
 
+                    Console.WriteLine("Found");
                     if(aIndex == 0){
                         median = b[bIndex - 1];
                     }
@@ -62,18 +62,19 @@ namespace SortedArraysMedian
                         median = Math.Max(a[aIndex -1], b[bIndex-1]);
                     }
 
-                    Console.WriteLine($"Found , {aIndex}, {bIndex}");
-                }
-
-
-                if(iter-- == 0){
                     break;
                 }
-
-                
-
             }
 
+            
+
+            Console.WriteLine($"Median {median}");
+
+            if((aLength + bLength) % 2 == 0){
+
+                Console.WriteLine("Hello");
+
+            }
 
             return 0.0;
         }
