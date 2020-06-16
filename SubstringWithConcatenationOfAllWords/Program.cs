@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Diagnostics;
 
 namespace SubstringWithConcatenationOfAllWords
 {
@@ -11,12 +14,23 @@ namespace SubstringWithConcatenationOfAllWords
 
             var substrings = new string[] { "ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba","ab","ba" };
 
-            var solution = new Solution();
-            var result = solution.FindSubstring(str, substrings);
 
+            var solution = new Solution();
+
+            var result = TestSolution(() => solution.FindSubstring(str, substrings));
+            
             foreach(var r in result) {
                 Console.WriteLine(r);    
             }
+        }
+
+        public static T TestSolution<T>(Func<T> func){
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+            var result = func();
+            stopWatch.Stop();
+            Console.WriteLine($"Elapsed {stopWatch.ElapsedMilliseconds} ms");
+            return result;
         }
     }
 }
