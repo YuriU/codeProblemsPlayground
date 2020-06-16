@@ -14,7 +14,9 @@ namespace SubstringWithConcatenationOfAllWords
             var solution = new Solution();
             var result = solution.FindSubstring(str, substrings);
 
-            Console.WriteLine("Hello World!");
+            foreach(var r in result) {
+                Console.WriteLine(r);    
+            }
         }
     }
 }
