@@ -27,6 +27,7 @@ namespace NextPermutation
             }
         }
 
+        // Print all permutatuions revursively, no lexicographically order preserved
         static void PrintPermutations(int[] array, int from, int to)
         {
             if (from == to)
