@@ -11,6 +11,8 @@ namespace NextPermutation
             PrintArray(array);
             Console.WriteLine();
 
+            PrintPermutations(array, 0, array.Length - 1);
+            return;
             for (int i = 0; i < array.Length; i++)
             {
                 Swap(array, 0, i);
@@ -25,6 +27,23 @@ namespace NextPermutation
             }
         }
 
+        static void PrintPermutations(int[] array, int from, int to)
+        {
+            if (from == to)
+            {
+                PrintArray(array);
+            }
+            else
+            {
+                for (int i = from; i <= to; i++)
+                {
+                    Swap(array, from, i);
+                    PrintPermutations(array, from+1, to);
+                    Swap(array, i, from);
+                }
+            }
+        }
+        
         static void Swap(int[] array, int i, int j)
         {
             var temp = array[i];
