@@ -27,6 +27,7 @@ namespace NextPermutation
             }
         }
 
+
         static void PrintPermutations(int[] array, int from, int to)
         {
             if (from == to)
