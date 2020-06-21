@@ -33,6 +33,9 @@ public class Solution {
         }
     }
     
+    // Check if permutation [from:to] is last for it's size
+    // e.g. 3-2-1, 4-3, 1
+    // All elements are in descending order
     bool IsLastPermutation(int[] nums, int from, int to) {
         if(from == to) {
             return true;
@@ -46,6 +49,12 @@ public class Solution {
         return true;
     }
     
+    // Finding minimal elemente int the range bigget than N
+    // For example for the permutatuin
+    // 1 3 4 2  - We discovered that 4 2 is last permutation for length 2, so the range 1 3 is over
+    // Looking for the new outer range bigget than 1 3
+    // To do that, we need to find minimal value in array 4 2 which is bigger than 3. In our case 4
+    // Then we can pick it for start new outer range 1 4 and have inner range 2 3
     private int IndexOfSmaller(int[] nums, int from, int biggerThan){
         int min = int.MaxValue;
         int minIndex = -1;
